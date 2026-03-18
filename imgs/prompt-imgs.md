@@ -1,4 +1,22 @@
 
+
+
+
+``` 
+Create a scientific book illustration of a dino mixed of characteristics of [dino name].
+Style: classic natural history book illustration, similar to museum field guides or paleontology textbooks.
+Full body visible, side profile, facing right.
+Scientifically accurate paleo reconstruction with correct proportions.
+Clean plain background (white or very light neutral) with almost no scenery.
+Centered composition with empty margin around the dinosaur for trading card layout.
+Natural and believable coloration, detailed but clean textures.
+Soft even lighting, no dramatic shadows.
+No text, no labels, no watermark.
+Image optimized for a trading card illustration.
+Resolution around 768x768 pixels.
+``` 
+
+
 ``` 
 Create a scientific book illustration of a [DINOSAUR NAME].
 Style: classic natural history book illustration, similar to museum field guides or paleontology textbooks.

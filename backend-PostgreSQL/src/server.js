@@ -14,7 +14,7 @@ const pool = new Pool({
     database: 'trunfo-dino', // Nome da sua database
     // password: 'senai', // Substitua pela sua senha
     password: 'senai', // Substitua pela sua senha
-    port: 5433, // Porta padrão do PostgreSQL
+    port: 5432, // Porta padrão do PostgreSQL
 });
 
 // Habilitar CORS para todas as rotas

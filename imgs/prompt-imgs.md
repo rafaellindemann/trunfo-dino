@@ -1,9 +1,38 @@
 
+``` 
+Create a scientific book illustration of a [dino name].
+Style: classic natural history book illustration, similar to museum field guides or paleontology textbooks.
+Full body visible, side profile, facing right.
+Scientifically accurate paleo reconstruction with correct proportions.
+Background: very subtle and minimal environment (suggestion of ground and distant shapes), softly blurred and slightly desaturated, low detail, not distracting.
+Centered composition with empty margin around the dinosaur for trading card layout.
+Natural and believable coloration, detailed but clean textures.
+Soft even lighting, no dramatic shadows.
+No text, no labels, no watermark.
+Image optimized for a trading card illustration.
+Resolution around 768x768 pixels.
+``` 
 
 
+
+Menor arquivo, menor imagem, mais background
+``` 
+Create a scientific book illustration of a Brachiosaurus.
+Style: classic natural history book illustration, similar to museum field guides or paleontology textbooks.
+Full body visible, side profile, facing right.
+Scientifically accurate paleo reconstruction with correct proportions.
+Background: very subtle and minimal environment (suggestion of ground and distant shapes), softly blurred and slightly desaturated, low detail, not distracting.
+Centered composition with empty margin around the dinosaur for trading card layout.
+Natural and believable coloration, clean and slightly simplified textures (avoid hyper-realistic micro details).
+Soft even lighting, no dramatic shadows.
+No text, no labels, no watermark.
+Image optimized for web use and lightweight file size.
+Resolution around 512x512 pixels.
 
 ``` 
-Create a scientific book illustration of a dino mixed of characteristics of [dino name].
+
+``` 
+Create a scientific book illustration of a [dino name].
 Style: classic natural history book illustration, similar to museum field guides or paleontology textbooks.
 Full body visible, side profile, facing right.
 Scientifically accurate paleo reconstruction with correct proportions.

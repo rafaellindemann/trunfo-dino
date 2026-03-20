@@ -492,13 +492,15 @@
   .attr-row.selectable:hover .attr-label { color: var(--sandy-brown); }
 
   .attr-row.winning {
-    background: rgba(250,159,66,0.18) !important;
-    border-left: 3px solid var(--sandy-brown);
+    background: rgba(46,160,67,0.18) !important;
+    border-left: 3px solid #2ea043;
+    box-shadow: inset 0 0 0 1px rgba(46,160,67,0.32), 0 0 18px rgba(46,160,67,0.38);
   }
 
   .attr-row.losing {
-    background: rgba(114,24,23,0.18) !important;
-    border-left: 3px solid var(--dark-wine);
+    background: rgba(220,53,69,0.16) !important;
+    border-left: 3px solid #dc3545;
+    box-shadow: inset 0 0 0 1px rgba(220,53,69,0.28), 0 0 18px rgba(220,53,69,0.32);
   }
 
   .attr-row.tied {
@@ -523,7 +525,7 @@
 
   .attr-value {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.05rem;
     letter-spacing: 1px;
     color: var(--text-light);
   }
@@ -576,56 +578,43 @@
     display: block;
   }
 
-  /* result overlay */
+  /* result panel in arena center */
   .result-overlay {
-    position: fixed;
-    inset: 0;
-    display: flex;
+    width: 100%;
+    display: none;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    z-index: 200;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
+    gap: 10px;
   }
 
   .result-overlay.show {
-    pointer-events: auto;
-    opacity: 1;
+    display: flex;
   }
 
   .result-box {
+    width: 100%;
     background: rgba(10,26,16,0.97);
     border: 2px solid var(--pine-teal);
     border-radius: 6px;
-    padding: 40px 56px;
+    padding: 18px 12px 16px;
     text-align: center;
-    box-shadow: 0 0 80px rgba(0,0,0,0.7);
-    transform: scale(0.85);
-    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-    max-width: 420px;
-    width: 90%;
+    box-shadow: 0 0 28px rgba(0,0,0,0.45);
   }
 
-  .result-overlay.show .result-box { transform: scale(1); }
-
-  .result-emoji { font-size: 3.5rem; margin-bottom: 8px; display: block; }
+  .result-emoji { display: none; }
 
   .result-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.4rem;
-    letter-spacing: 3px;
+    font-size: 1.7rem;
+    letter-spacing: 2px;
     color: var(--sandy-brown);
-    text-shadow: 0 0 30px rgba(250,159,66,0.4);
-    margin-bottom: 6px;
+    text-shadow: 0 0 22px rgba(250,159,66,0.35);
+    margin-bottom: 12px;
+    line-height: 1;
   }
 
   .result-subtitle {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
-    color: var(--text-dim);
-    margin-bottom: 28px;
+    display: none;
   }
 
   .btn-next {
@@ -633,7 +622,7 @@
     color: var(--prussian-blue);
     border: none;
     border-radius: 3px;
-    padding: 12px 36px;
+    padding: 10px 18px;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.3rem;
     letter-spacing: 3px;
@@ -780,7 +769,8 @@
 
   @media (max-width: 700px) {
     .arena { grid-template-columns: 1fr; }
-    .arena-center { padding-top: 0; flex-direction: row; }
+    .arena-center { padding-top: 0; flex-direction: column; margin: 14px 0; }
+    .result-overlay { max-width: 260px; }
     .setup-box { padding: 32px 24px; }
     .players-row { grid-template-columns: 1fr; }
   }
@@ -873,6 +863,14 @@
         cartas
       </div>
       <div class="table-pile" id="table-pile-mini"></div>
+      <div class="result-overlay" id="result-overlay">
+        <div class="result-box">
+          <span class="result-emoji" id="result-emoji">🏆</span>
+          <div class="result-title" id="result-title">Vitória!</div>
+          <div class="result-subtitle" id="result-subtitle">—</div>
+          <button class="btn-next" id="btn-next" onclick="nextRound()">CONTINUAR</button>
+        </div>
+      </div>
     </div>
 
     <!-- PLAYER 2 -->
@@ -896,16 +894,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ══ RESULT OVERLAY ══ -->
-<div class="result-overlay" id="result-overlay">
-  <div class="result-box">
-    <span class="result-emoji" id="result-emoji">🏆</span>
-    <div class="result-title" id="result-title">Vitória!</div>
-    <div class="result-subtitle" id="result-subtitle">—</div>
-    <button class="btn-next" id="btn-next" onclick="nextRound()">PRÓXIMA RODADA →</button>
   </div>
 </div>
 
@@ -1166,11 +1154,11 @@
 
     if (type === 'tie') {
       emoji.textContent = '🤝';
-      title.textContent = 'EMPATE!';
+      title.textContent = 'Empate';
       sub.textContent   = `${attrLabel}: ${winVal} × ${loseVal} — as cartas ficam na mesa`;
     } else {
       emoji.textContent = '🏆';
-      title.textContent = `${winnerName} venceu!`;
+      title.textContent = winnerName;
       sub.textContent   = `${attrLabel}: ${winVal} vs ${loseVal}`;
     }
 

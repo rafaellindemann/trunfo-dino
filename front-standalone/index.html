@@ -178,6 +178,49 @@
     color: var(--prussian-blue);
   }
 
+
+  .type-filters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .type-option {
+    position: relative;
+  }
+
+  .type-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .type-option label {
+    display: block;
+    width: 100%;
+    padding: 11px 10px;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid var(--pine-teal);
+    border-radius: 3px;
+    background: rgba(41,73,54,0.18);
+    color: var(--text-dim);
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    user-select: none;
+  }
+
+  .type-option input:checked + label {
+    background: rgba(250,159,66,0.16);
+    color: var(--sandy-brown);
+    border-color: var(--sandy-brown);
+    box-shadow: 0 0 0 2px rgba(250,159,66,0.12);
+  }
+
   .btn-start {
     width: 100%;
     margin-top: 28px;
@@ -285,9 +328,9 @@
   /* arena */
   .arena {
     width: 100%;
-    max-width: 980px;
+    max-width: 1120px;
     display: grid;
-    grid-template-columns: 1fr 60px 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 24vw) minmax(0, 1fr);
     gap: 0;
     align-items: start;
   }
@@ -423,16 +466,24 @@
     background: linear-gradient(180deg, rgba(41,73,54,0.3) 0%, transparent 100%);
   }
 
+
   .card-img-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
     display: block;
+    padding: 10px;
   }
 
-  .card-img-wrap img[src$=".svg"] {
-    object-fit: contain;
-    padding: 16px;
+  .card-win-glow .card-front {
+    border-color: #2ea043;
+    box-shadow: 0 0 0 1px rgba(46,160,67,0.35), 0 0 28px rgba(46,160,67,0.45), 0 0 60px rgba(46,160,67,0.18);
+  }
+
+  .card-lose-glow .card-front {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 1px rgba(220,53,69,0.35), 0 0 26px rgba(220,53,69,0.4), 0 0 56px rgba(220,53,69,0.16);
   }
 
   .card-img-placeholder {
@@ -464,48 +515,56 @@
   }
 
   .card-attrs {
-    padding: 6px 0 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    padding: 8px 12px 14px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .attr-row {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: space-between;
-    padding: 7px 14px;
-    border-top: 1px solid rgba(41,73,54,0.5);
+    min-height: 64px;
+    padding: 10px 10px 8px;
+    border: 1px solid rgba(41,73,54,0.6);
+    border-radius: 6px;
+    background: rgba(13,33,73,0.12);
     cursor: default;
-    transition: background 0.15s;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
     position: relative;
+    overflow: hidden;
   }
 
   .attr-row.selectable {
     cursor: pointer;
+    touch-action: manipulation;
   }
 
   .attr-row.selectable:hover {
-    background: rgba(250,159,66,0.1);
+    background: rgba(250,159,66,0.12);
+    border-color: rgba(250,159,66,0.5);
+    transform: translateY(-1px);
   }
 
   .attr-row.selectable:hover .attr-label { color: var(--sandy-brown); }
 
   .attr-row.winning {
     background: rgba(46,160,67,0.18) !important;
-    border-left: 3px solid #2ea043;
+    border-color: #2ea043;
     box-shadow: inset 0 0 0 1px rgba(46,160,67,0.32), 0 0 18px rgba(46,160,67,0.38);
   }
 
   .attr-row.losing {
     background: rgba(220,53,69,0.16) !important;
-    border-left: 3px solid #dc3545;
+    border-color: #dc3545;
     box-shadow: inset 0 0 0 1px rgba(220,53,69,0.28), 0 0 18px rgba(220,53,69,0.32);
   }
 
   .attr-row.tied {
     background: rgba(13,33,73,0.35) !important;
-    border-left: 3px solid var(--prussian-blue);
+    border-color: var(--prussian-blue);
   }
 
   .attr-label {
@@ -519,15 +578,18 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .attr-icon { font-size: 0.9rem; }
 
   .attr-value {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     letter-spacing: 1px;
     color: var(--text-light);
+    margin-top: 8px;
   }
 
   .attr-bar-wrap {
@@ -545,15 +607,17 @@
 
   /* center column */
   .arena-center {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 80px;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 80px 12px 0;
     gap: 12px;
   }
 
   .vs-badge {
+    text-align: center;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2rem;
     color: var(--dark-wine);
@@ -562,6 +626,7 @@
   }
 
   .pile-info {
+    text-align: center;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 2px;
@@ -584,6 +649,7 @@
     display: none;
     align-items: stretch;
     justify-content: center;
+    flex: 1 1 auto;
   }
 
   .result-overlay.show {
@@ -592,7 +658,7 @@
 
   .result-box {
     width: 100%;
-    min-height: 118px;
+    min-height: 132px;
     background: rgba(10,26,16,0.97);
     border: 2px solid var(--pine-teal);
     border-radius: 6px;
@@ -764,6 +830,7 @@
 
   /* table pile cards */
   .table-pile {
+    justify-content: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -781,10 +848,12 @@
 
   @media (max-width: 700px) {
     .arena { grid-template-columns: 1fr; }
-    .arena-center { padding-top: 0; flex-direction: column; margin: 14px 0; }
-    .result-overlay { width: 100%; max-width: 260px; }
+    .arena-center { padding: 0; flex-direction: column; margin: 14px 0; }
+    .result-overlay { width: 100%; max-width: none; }
     .setup-box { padding: 32px 24px; }
     .players-row { grid-template-columns: 1fr; }
+    .type-filters { grid-template-columns: 1fr; }
+    .card-attrs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   }
 </style>
 </head>
@@ -826,6 +895,24 @@
         <label for="mode-random">🎲 Aleatórios</label>
         <input type="radio" name="mode" id="mode-top" value="top">
         <label for="mode-top">⭐ Mais Famosos</label>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Tipos permitidos</label>
+      <div class="type-filters">
+        <div class="type-option">
+          <input type="checkbox" id="tipo-terrestre" value="terrestre" checked>
+          <label for="tipo-terrestre">🌿 Terrestres</label>
+        </div>
+        <div class="type-option">
+          <input type="checkbox" id="tipo-aquatico" value="aquatico" checked>
+          <label for="tipo-aquatico">🌊 Aquáticos</label>
+        </div>
+        <div class="type-option">
+          <input type="checkbox" id="tipo-voador" value="voador" checked>
+          <label for="tipo-voador">🪽 Voadores</label>
+        </div>
       </div>
     </div>
 
@@ -941,6 +1028,7 @@
     currentPlayer: 1,   // 1 or 2
     phase: 'choose',    // 'choose' | 'reveal'
     chosenAttr: null,
+    roundWinner: null,
   };
 
   // ─────────────────────────────────────────
@@ -962,6 +1050,12 @@
     showLoading(true);
 
     const total = n * 2;
+    const selectedTypes = Array.from(document.querySelectorAll('.type-filters input:checked')).map(el => el.value);
+
+    if (selectedTypes.length === 0) {
+      errEl.textContent = 'Selecione pelo menos um tipo de dino.';
+      return;
+    }
 
     let todosDinos;
     try {
@@ -974,9 +1068,11 @@
       return;
     }
 
+    todosDinos = todosDinos.filter(d => selectedTypes.includes((d.tipo || '').toLowerCase()));
+
     if (!Array.isArray(todosDinos) || todosDinos.length < total) {
       showLoading(false);
-      errEl.textContent = 'Não há dinos suficientes no arquivo de dados. Tente menos cartas.';
+      errEl.textContent = 'Não há dinos suficientes com os tipos selecionados. Tente menos cartas ou marque mais tipos.';
       return;
     }
 
@@ -991,9 +1087,6 @@
       dinos = dinos.slice(0, total);
     }
 
-    // console.log(dinos);
-    // localStorage.setItem('lastDinos', JSON.stringify(dinos)); 
-    
 
     // shuffle para garantir aleatoriedade mesmo no modo top
     shuffle(dinos);
@@ -1004,9 +1097,10 @@
     state.p1 = { name: p1name, deck: dinos.slice(0, n) };
     state.p2 = { name: p2name, deck: dinos.slice(n, total) };
     state.tablePile = [];
-    state.currentPlayer = 1;
+    state.currentPlayer = Math.random() < 0.5 ? 1 : 2;
     state.phase = 'choose';
     state.chosenAttr = null;
+    state.roundWinner = null;
 
     
 
@@ -1028,18 +1122,18 @@
     document.getElementById('p1-count').textContent = p1.deck.length;
     document.getElementById('p2-count').textContent = p2.deck.length;
 
-    console.log(p1.deck);
-    console.log(p2.deck);
-
-    localStorage.setItem('p1', JSON.stringify(p1.deck)); // para debug
-    localStorage.setItem('p2', JSON.stringify(p2.deck)); // para debug
 
     // active player name highlight
     document.getElementById('p1-display').className = 'player-name' + (currentPlayer === 1 ? ' active-player' : '');
     document.getElementById('p2-display').className = 'player-name' + (currentPlayer === 2 ? ' active-player' : '');
 
     const activeP = currentPlayer === 1 ? p1 : p2;
-    document.getElementById('turn-banner').textContent = `Vez de ${activeP.name} — escolha um atributo!`;
+    document.getElementById('turn-banner').textContent = phase === 'reveal'
+      ? `Comparando cartas...`
+      : `Vez de ${activeP.name} — escolha um atributo!`;
+
+    document.getElementById('card-p1').classList.remove('card-win-glow', 'card-lose-glow');
+    document.getElementById('card-p2').classList.remove('card-win-glow', 'card-lose-glow');
 
     // table pile
     document.getElementById('pile-count').textContent = tablePile.length;
@@ -1085,6 +1179,11 @@
     frontEl.querySelector('.card-name').textContent = dino.nome || '—';
     frontEl.querySelector('.card-tipo').textContent = dino.tipo || '';
 
+    if (chosenAttr) {
+      if (state.roundWinner === playerNum) cardEl.classList.add('card-win-glow');
+      else if (state.roundWinner && state.roundWinner !== 'tie') cardEl.classList.add('card-lose-glow');
+    }
+
     // attrs
     const attrsEl = document.getElementById(`attrs-${player}`);
     attrsEl.innerHTML = '';
@@ -1119,7 +1218,7 @@
       const idx = attrsEl.children.length + 1; // 1-based index for keyboard
 
       row.innerHTML = `
-        <span class="attr-label"><span class="attr-key-hint">[${idx}]</span><span class="attr-icon">${attr.icon}</span>${attr.label}</span>
+        <span class="attr-label"><span><span class="attr-key-hint">[${idx}]</span><span class="attr-icon">${attr.icon}</span>${attr.label}</span></span>
         <span class="attr-value">${formatVal(val, attr.unit)}</span>
         <div class="attr-bar-wrap"><div class="attr-bar" style="width:${pct}%"></div></div>
       `;
@@ -1148,10 +1247,16 @@
 
     setTimeout(() => {
       if (p1val > p2val) {
+        state.roundWinner = 1;
+        renderGame();
         showResult('win', state.p1.name, attrLabel, p1val, p2val);
       } else if (p2val > p1val) {
+        state.roundWinner = 2;
+        renderGame();
         showResult('win', state.p2.name, attrLabel, p2val, p1val);
       } else {
+        state.roundWinner = 'tie';
+        renderGame();
         showResult('tie', null, attrLabel, p1val, p2val);
       }
     }, 900);
@@ -1181,6 +1286,11 @@
   function nextRound() {
     document.getElementById('result-overlay').classList.remove('show');
 
+    const currentCardP1 = document.getElementById('card-p1');
+    const currentCardP2 = document.getElementById('card-p2');
+    currentCardP1.classList.add('flipped');
+    currentCardP2.classList.add('flipped');
+
     const result = state._pendingResult;
     const card1 = state.p1.deck.shift();
     const card2 = state.p2.deck.shift();
@@ -1189,20 +1299,21 @@
       state.tablePile.push(card1, card2);
       // turn stays with same player (already in state.currentPlayer)
     } else {
-      const winner = result === 'p1' ? state.p1 : state.p2;
+      const winner = result == 'p1' ? state.p1 : state.p2;
       winner.deck.push(...state.tablePile, card1, card2);
       state.tablePile = [];
-      state.currentPlayer = result === 'p1' ? 1 : 2;
+      state.currentPlayer = result == 'p1' ? 1 : 2;
     }
 
     state.phase = 'choose';
     state.chosenAttr = null;
+    state.roundWinner = null;
 
-    // check win
-    if (state.p1.deck.length === 0) return endGame(state.p2.name);
-    if (state.p2.deck.length === 0) return endGame(state.p1.name);
-
-    renderGame();
+    setTimeout(() => {
+      if (state.p1.deck.length === 0) return endGame(state.p2.name);
+      if (state.p2.deck.length === 0) return endGame(state.p1.name);
+      renderGame();
+    }, 560);
   }
 
   function endGame(winnerName) {
@@ -1260,6 +1371,9 @@
     document.getElementById('game-screen').classList.remove('active');
     document.getElementById('setup-screen').style.display = 'flex';
     document.getElementById('confetti').innerHTML = '';
+    state.phase = 'choose';
+    state.chosenAttr = null;
+    state.roundWinner = null;
   }
 
   function spawnConfetti() {

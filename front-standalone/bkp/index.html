@@ -582,9 +582,8 @@
   .result-overlay {
     width: 100%;
     display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    align-items: stretch;
+    justify-content: center;
   }
 
   .result-overlay.show {
@@ -593,45 +592,58 @@
 
   .result-box {
     width: 100%;
+    min-height: 118px;
     background: rgba(10,26,16,0.97);
     border: 2px solid var(--pine-teal);
     border-radius: 6px;
-    padding: 18px 12px 16px;
+    padding: 12px 10px;
     text-align: center;
     box-shadow: 0 0 28px rgba(0,0,0,0.45);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  }
+
+  .result-box:hover {
+    border-color: var(--sandy-brown);
+    box-shadow: 0 0 30px rgba(250,159,66,0.18), 0 0 28px rgba(0,0,0,0.45);
+    transform: translateY(-1px);
   }
 
   .result-emoji { display: none; }
 
   .result-title {
+    width: 100%;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.7rem;
-    letter-spacing: 2px;
+    font-size: clamp(1.05rem, 3vw, 1.55rem);
+    letter-spacing: 1px;
     color: var(--sandy-brown);
     text-shadow: 0 0 22px rgba(250,159,66,0.35);
-    margin-bottom: 12px;
-    line-height: 1;
+    line-height: 1.05;
+    margin: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .result-subtitle {
-    display: none;
+    display: block;
+    width: 100%;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffd24a;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
-
-  .btn-next {
-    background: var(--sandy-brown);
-    color: var(--prussian-blue);
-    border: none;
-    border-radius: 3px;
-    padding: 10px 18px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 3px;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 4px 16px rgba(250,159,66,0.3);
-  }
-
-  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(250,159,66,0.4); }
 
   /* winner screen */
   .winner-overlay {
@@ -770,7 +782,7 @@
   @media (max-width: 700px) {
     .arena { grid-template-columns: 1fr; }
     .arena-center { padding-top: 0; flex-direction: column; margin: 14px 0; }
-    .result-overlay { max-width: 260px; }
+    .result-overlay { width: 100%; max-width: 260px; }
     .setup-box { padding: 32px 24px; }
     .players-row { grid-template-columns: 1fr; }
   }
@@ -864,11 +876,10 @@
       </div>
       <div class="table-pile" id="table-pile-mini"></div>
       <div class="result-overlay" id="result-overlay">
-        <div class="result-box">
+        <div class="result-box" id="result-box" onclick="nextRound()" role="button" tabindex="0" aria-label="Continuar para a próxima rodada">
           <span class="result-emoji" id="result-emoji">🏆</span>
           <div class="result-title" id="result-title">Vitória!</div>
-          <div class="result-subtitle" id="result-subtitle">—</div>
-          <button class="btn-next" id="btn-next" onclick="nextRound()">CONTINUAR</button>
+          <div class="result-subtitle" id="result-subtitle">Clique aqui pra continuar</div>
         </div>
       </div>
     </div>
@@ -1155,14 +1166,15 @@
     if (type === 'tie') {
       emoji.textContent = '🤝';
       title.textContent = 'Empate';
-      sub.textContent   = `${attrLabel}: ${winVal} × ${loseVal} — as cartas ficam na mesa`;
+      sub.textContent   = 'Clique aqui pra continuar';
     } else {
       emoji.textContent = '🏆';
       title.textContent = winnerName;
-      sub.textContent   = `${attrLabel}: ${winVal} vs ${loseVal}`;
+      sub.textContent   = 'Clique aqui pra continuar';
     }
 
     overlay.classList.add('show');
+    document.getElementById('result-box').focus();
     state._pendingResult = type === 'tie' ? 'tie' : (winnerName === state.p1.name ? 'p1' : 'p2');
   }
 
@@ -1220,6 +1232,14 @@
     });
     const attr = visibleAttrs[n - 1];
     if (attr) chooseAttr(attr.key);
+  });
+
+  document.getElementById('result-box').addEventListener('keydown', (e) => {
+    if (!document.getElementById('result-overlay').classList.contains('show')) return;
+    if (e.key == 'Enter' || e.key == ' ') {
+      e.preventDefault();
+      nextRound();
+    }
   });
 
   function shuffle(arr) {

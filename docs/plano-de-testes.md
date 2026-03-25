@@ -120,6 +120,8 @@ Um teste será considerado **aprovado** quando:
 
 ## 6. Checklist formal de testes
 
+Link da tabela organizadinha no Planilhas: https://docs.google.com/spreadsheets/d/1jZQH4GFaxCyg9oeSi58HX20Bs7DwLiWy2XT4rUpfVrw/edit?usp=sharing
+
 | ID | Requisito / Objetivo | Rota | Pré-condição | Entrada / Dados de teste | Passos de execução | Resultado esperado | Status 
 (✅/❌/⚠️) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
